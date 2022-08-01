@@ -1,15 +1,15 @@
 //
 // Created by roman on 27.01.2022.
 //
-#include "s21_matrix.h"
+#include "CMatrix.h"
 
-matrix_t s21_sum_matrix(matrix_t *A, matrix_t *B) {
+matrix_t SumMatrix(matrix_t *A, matrix_t *B) {
   matrix_t new_matrix;
   new_matrix.matrix = NULL;
-  if (null_check(A) == SUCCESS && null_check(B) == SUCCESS) {
-    int flag = check_size_matrix(A, B);
+  if (NullCheck(A) == SUCCESS && NullCheck(B) == SUCCESS) {
+    int flag = CheckSizeMatrix(A, B);
     if (flag == SUCCESS) {
-      new_matrix = s21_create_matrix(A->rows, A->columns);
+      new_matrix = CreateMatrix(A->rows, A->columns);
       new_matrix.matrix_type = CORRECT_MATRIX;
       for (int i = 0; i < A->rows; ++i) {
         for (int j = 0; j < A->columns; ++j) {
@@ -21,13 +21,13 @@ matrix_t s21_sum_matrix(matrix_t *A, matrix_t *B) {
 
   return new_matrix;
 }
-matrix_t s21_sub_matrix(matrix_t *A, matrix_t *B) {
+matrix_t SubMatrix(matrix_t *A, matrix_t *B) {
   matrix_t new_matrix;
   new_matrix.matrix = NULL;
-  if (null_check(A) == SUCCESS && null_check(B) == SUCCESS) {
-    int flag = check_size_matrix(A, B);
+  if (NullCheck(A) == SUCCESS && NullCheck(B) == SUCCESS) {
+    int flag = CheckSizeMatrix(A, B);
     if (flag == SUCCESS) {
-      new_matrix = s21_create_matrix(A->rows, A->columns);
+      new_matrix = CreateMatrix(A->rows, A->columns);
       new_matrix.matrix_type = CORRECT_MATRIX;
       for (int i = 0; i < A->rows; ++i) {
         for (int j = 0; j < A->columns; ++j) {

@@ -2,7 +2,7 @@
 // Created by roman on 28.01.2022.
 //
 
-#include "debug_fun.h"
+#include "DebugFun.h"
 
 #define DIVIDER 100000000
 void output_matrix(matrix_t *matrix) {

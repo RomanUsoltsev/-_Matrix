@@ -1,13 +1,13 @@
 //
 // Created by roman on 27.01.2022.
 //
-#include "s21_matrix.h"
+#include "CMatrix.h"
 
-matrix_t s21_mult_number(matrix_t *A, double number) {
+matrix_t MultNumber(matrix_t *A, double number) {
   matrix_t new_matrix;
   new_matrix.matrix = NULL;
-  if (null_check(A) == SUCCESS) {
-    new_matrix = s21_create_matrix(A->rows, A->columns);
+  if (NullCheck(A) == SUCCESS) {
+    new_matrix = CreateMatrix(A->rows, A->columns);
     new_matrix.matrix_type = CORRECT_MATRIX;
     for (int i = 0; i < A->rows; ++i) {
       for (int j = 0; j < A->columns; ++j) {
@@ -18,12 +18,12 @@ matrix_t s21_mult_number(matrix_t *A, double number) {
 
   return new_matrix;
 }
-matrix_t s21_mult_matrix(matrix_t *A, matrix_t *B) {
+matrix_t MultMatrix(matrix_t *A, matrix_t *B) {
   matrix_t new_matrix;
   new_matrix.matrix = NULL;
-  if (null_check(A) == SUCCESS && null_check(B) == SUCCESS) {
-    if (check_mult(A, B) == SUCCESS) {
-      new_matrix = s21_create_matrix(A->rows, B->columns);
+  if (NullCheck(A) == SUCCESS && NullCheck(B) == SUCCESS) {
+    if (CheckMult(A, B) == SUCCESS) {
+      new_matrix = CreateMatrix(A->rows, B->columns);
       new_matrix.matrix_type = CORRECT_MATRIX;
 
       for (int i = 0; i < A->rows; ++i) {
@@ -39,7 +39,7 @@ matrix_t s21_mult_matrix(matrix_t *A, matrix_t *B) {
   return new_matrix;
 }
 
-int check_mult(matrix_t *A, matrix_t *B) {
+int CheckMult(matrix_t *A, matrix_t *B) {
   int flag = SUCCESS;
   if (A->columns != B->rows) { flag = FAILURE; }
   return flag;
