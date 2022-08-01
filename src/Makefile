@@ -24,10 +24,6 @@ OBJECTS := $(patsubst %, $(BI)%, $(OBJECTS_1))
 OBJECTS_2 := $(patsubst %, $(BI)%, $(OBJECTS_1))
 #PROGECT_______________________________________PROGECT
 
-pr:
-	@echo $(SOURCES)
-	@echo $(OBJECTS)
-
 .PHONY: all clear.a clear.o clear_test clean test cmatrix.a linters cppcheck leaks gcov_report
 
 default: all
