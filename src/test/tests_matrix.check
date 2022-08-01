@@ -1,0 +1,303 @@
+#include "../s21_matrix.h"
+#include "../debug_fun/debug_fun.h"
+
+#test s21_create_matrix_1
+matrix_t matrix_1 = s21_create_matrix(3, 3);
+ck_assert_int_eq(matrix_1.matrix_type, ZERO_MATRIX);
+s21_remove_matrix(&matrix_1);
+
+
+#test s21_create_matrix_2
+matrix_t matrix_2 = s21_create_matrix(9, 6);
+ck_assert_int_eq(matrix_2.matrix_type, ZERO_MATRIX);
+s21_remove_matrix(&matrix_2);
+
+
+#test s21_create_matrix_3
+matrix_t matrix_3 = s21_create_matrix(0, 0);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_3);
+
+
+#test s21_create_matrix_4
+matrix_t matrix_4 = s21_create_matrix(-1, 0);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_4);
+
+
+#test s21_create_matrix_5
+matrix_t matrix_5 = s21_create_matrix(0, 1);
+ck_assert_int_eq(matrix_5.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_5);
+
+
+#test s21_create_matrix_6
+matrix_t matrix_6 = s21_create_matrix(90, 40);
+ck_assert_int_eq(matrix_6.matrix_type, ZERO_MATRIX);
+s21_remove_matrix(&matrix_6);
+
+#test s21_eq_matrix_1
+matrix_t matrix_1 = s21_create_matrix(3, 3);
+matrix_t matrix_2 = s21_create_matrix(3, 3);
+rand_fill(&matrix_1, &matrix_2, SAME, 22, 0.000000001, FLT);
+int flag = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(flag, SUCCESS);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_eq_matrix_2
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+matrix_t matrix_2 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, &matrix_2, DIFF, 45, 0, FLT);
+int flag = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(flag, FAILURE);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_eq_matrix_3
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+matrix_t matrix_2 = s21_create_matrix(6, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 45, 0, FLT);
+int flag = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(flag, FAILURE);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+
+#test s21_eq_matrix_4
+matrix_t matrix_1 = s21_create_matrix(7, 4);
+matrix_t matrix_2 = s21_create_matrix(6, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 45, 0, FLT);
+int flag = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(flag, FAILURE);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_eq_matrix_5
+int flag = s21_eq_matrix(NULL, NULL);
+ck_assert_int_eq(flag, FAILURE);
+
+#test s21_eq_matrix_6
+matrix_t matrix_1 = s21_create_matrix(7, 4);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+int flag = s21_eq_matrix(&matrix_1, NULL);
+ck_assert_int_eq(flag, FAILURE);
+s21_remove_matrix(&matrix_1);
+
+#test s21_eq_matrix_7
+matrix_t matrix_1 = s21_create_matrix(3, 7);
+matrix_t matrix_2 = s21_create_matrix(3, 7);
+rand_fill(&matrix_1, &matrix_2, SAME, 22, 0, FLT);
+int flag = s21_eq_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(flag, SUCCESS);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_sum_sub_matrix_1
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+matrix_t matrix_2 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 65, 0, FLT);
+matrix_t matrix_3 = s21_sum_matrix(&matrix_1, &matrix_2);
+matrix_t matrix_4 = s21_sub_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(matrix_3.matrix_type, CORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+s21_remove_matrix(&matrix_3);
+s21_remove_matrix(&matrix_4);
+
+
+#test s21_sum_sub_matrix_2
+matrix_t matrix_1 = s21_create_matrix(5, 6);
+matrix_t matrix_2 = s21_create_matrix(6, 7);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 65, 0, FLT);
+matrix_t matrix_3 = s21_sum_matrix(&matrix_1, &matrix_2);
+matrix_t matrix_4 = s21_sub_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_sum_sub_matrix_3
+matrix_t matrix_1 = s21_create_matrix(5, 6);
+matrix_t matrix_2 = s21_create_matrix(6, 6);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 65, 0, FLT);
+matrix_t matrix_3 = s21_sum_matrix(&matrix_1, &matrix_2);
+matrix_t matrix_4 = s21_sub_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_sum_sub_matrix_4
+matrix_t matrix_1 = s21_create_matrix(5, 6);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_3 = s21_sum_matrix(&matrix_1, NULL);
+matrix_t matrix_4 = s21_sub_matrix(&matrix_1, NULL);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+
+#test s21_sum_sub_matrix_5
+matrix_t matrix_3 = s21_sum_matrix(NULL, NULL);
+matrix_t matrix_4 = s21_sub_matrix(NULL, NULL);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+
+#test s21_sum_sub_matrix_6
+matrix_t matrix_1;
+matrix_t matrix_2;
+matrix_1.matrix = NULL;
+matrix_2.matrix = NULL;
+matrix_t matrix_3 = s21_sum_matrix(&matrix_1, &matrix_2);
+matrix_t matrix_4 = s21_sub_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+
+#test s21_mult_num_mat_1
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+matrix_t matrix_2 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 65, 0, FLT);
+matrix_t matrix_3 = s21_mult_number(&matrix_1, 1);
+matrix_t matrix_4 = s21_mult_number(&matrix_1, 5.63436);
+ck_assert_int_eq(matrix_3.matrix_type, CORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+s21_remove_matrix(&matrix_3);
+s21_remove_matrix(&matrix_4);
+
+#test s21_mult_num_mat_2
+matrix_t matrix_1 = s21_create_matrix(32, 6);
+matrix_t matrix_2 = s21_create_matrix(6, 26);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 65, 0, FLT);
+matrix_t matrix_3 = s21_mult_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(matrix_3.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+s21_remove_matrix(&matrix_3);
+
+#test s21_mult_num_mat_3
+matrix_t matrix_1 = s21_create_matrix(32, 6);
+matrix_t matrix_2 = s21_create_matrix(12, 26);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+rand_fill(&matrix_2, NULL, ONE, 65, 0, FLT);
+matrix_t matrix_3 = s21_mult_matrix(&matrix_1, &matrix_2);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_mult_num_mat_4
+matrix_t matrix_3 = s21_mult_number(NULL, 1);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+
+#test s21_mult_num_mat_5
+matrix_t matrix_1;
+matrix_1.matrix = NULL;
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_3 = s21_mult_number(&matrix_1, 1);
+matrix_t matrix_4 = s21_mult_number(&matrix_1, 5.63436);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+ck_assert_int_eq(matrix_4.matrix_type, INCORRECT_MATRIX);
+
+#test s21_mult_num_mat_6
+matrix_t matrix_3 = s21_mult_matrix(NULL, NULL);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+
+
+#test s21_mult_num_mat_7
+matrix_t matrix_1 = s21_create_matrix(32, 6);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_3 = s21_mult_matrix(&matrix_1, NULL);
+ck_assert_int_eq(matrix_3.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+
+#test s21_transpose_1
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_2 = s21_transpose(&matrix_1);
+ck_assert_int_eq(matrix_2.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_transpose_2
+matrix_t matrix_1 = s21_create_matrix(24, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_2 = s21_transpose(&matrix_1);
+ck_assert_int_eq(matrix_2.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_transpose_3
+matrix_t matrix_2 = s21_transpose(NULL);
+ck_assert_int_eq(matrix_2.matrix_type, INCORRECT_MATRIX);
+
+#test s21_calc_complements_1
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_2 = s21_calc_complements(&matrix_1);
+ck_assert_int_eq(matrix_2.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_calc_complements_2
+matrix_t matrix_1 = s21_create_matrix(7, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_2 = s21_calc_complements(&matrix_1);
+ck_assert_int_eq(matrix_2.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+
+#test s21_calc_complements_3
+matrix_t matrix_2 = s21_calc_complements(NULL);
+ck_assert_int_eq(matrix_2.matrix_type, INCORRECT_MATRIX);
+
+#test s21_determinant_1
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, INT);
+int det = (int)s21_determinant(&matrix_1);
+ck_assert_int_eq(det, -285312);
+s21_remove_matrix(&matrix_1);
+
+#test s21_determinant_2
+matrix_t matrix_1 = s21_create_matrix(6, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, INT);
+s21_determinant(&matrix_1);
+s21_remove_matrix(&matrix_1);
+
+#test s21_determinant_3
+s21_determinant(NULL);
+
+#test s21_determinant_4
+matrix_t matrix_1 = s21_create_matrix(1, 1);
+rand_fill(&matrix_1, NULL, ONE, 56, 0, INT);
+s21_determinant(&matrix_1);
+s21_remove_matrix(&matrix_1);
+
+
+#test s21_inverse_matrix_1
+matrix_t matrix_1 = s21_create_matrix(5, 5);
+rand_fill(&matrix_1, NULL, ONE, 445, 0, FLT);
+matrix_t matrix_2 = s21_inverse_matrix(&matrix_1);
+ck_assert_int_eq(matrix_2.matrix_type, CORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+s21_remove_matrix(&matrix_2);
+
+#test s21_inverse_matrix_2
+matrix_t matrix_1 = s21_create_matrix(6, 5);
+rand_fill(&matrix_1, NULL, ONE, 45, 0, FLT);
+matrix_t matrix_2 = s21_inverse_matrix(&matrix_1);
+ck_assert_int_eq(matrix_2.matrix_type, INCORRECT_MATRIX);
+s21_remove_matrix(&matrix_1);
+
+#test s21_inverse_matrix_3
+matrix_t matrix_2 = s21_inverse_matrix(NULL);
+ck_assert_int_eq(matrix_2.matrix_type, INCORRECT_MATRIX);
+
+
